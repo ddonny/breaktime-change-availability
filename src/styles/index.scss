@@ -1,0 +1,215 @@
+@mixin disable-outline {
+  outline: none;
+  padding: 5px 5px;
+}
+@mixin no-select {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+@mixin input-text-field {
+  background-color: rgba($color: #FFFFFF, $alpha: 1.0);
+  border-radius: 5px;
+  border: none;
+  width: 100px;
+  height: 36px;
+}
+@mixin optional-at-root($sel) {
+  @at-root #{if(not &, $sel, selector-append(&, $sel))} {
+    @content;
+  }
+}
+
+@mixin placeholder {
+  @include optional-at-root('::-webkit-input-placeholder') {
+    @content;
+  }
+
+  @include optional-at-root(':-moz-placeholder') {
+    @content;
+  }
+
+  @include optional-at-root('::-moz-placeholder') {
+    @content;
+  }
+
+  @include optional-at-root(':-ms-input-placeholder') {
+    @content;
+  }
+}
+
+@mixin input {
+  @include input-text-field;
+  @include placeholder {
+    color: rgba($color: #CCCCCC, $alpha: 1.0);
+    font-size: 12px;
+    font-weight:100;
+  }
+}
+
+@mixin trigger-button{
+  background-color: rgba($color: #56A9F6, $alpha: 1.0);
+  color: rgba($color: #FFFFFF, $alpha: 1.0);
+  width: 100px;
+  height: 44px;
+  font-size: 14px;
+  border-radius: 5px;
+}
+
+html {
+  font-size: 100%;
+  height: 100%;
+  width: 100%;
+  background: #FFC371;
+  position: fixed;
+  z-index: 0;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial,
+    sans-serif;
+  font-size: 1rem;
+  line-height: 1.5;
+  background: #FF5F6D;  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to right, #FF5F6D, #FFC371 );  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to right, #FF5F6D, #FFC371); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  width: 100%;
+  height: 100%;
+}
+textarea, select, button {
+  @include disable-outline;
+}
+input {
+  @include disable-outline;
+  padding: 5px 10px;
+  &:disabled{
+    background-color: rgba($color: #CCCCCC, $alpha: 1) !important;
+  }
+}
+button{
+  &:disabled{
+    opacity: 0.5;
+  }
+}
+.container{
+  z-index: 1;
+  position: relative;
+  .flex-column{
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    flex-direction: column;
+    .money-adder-container {
+      background-color: rgba($color: #DDDEE0, $alpha: 1.0);
+      width: 100%;
+      @media only screen and (min-width: 768px) {
+        width: 365px;
+      }
+      height: 63px;
+      margin: 20px auto;
+      display: flex;
+      justify-content: center;
+      align-content: center;
+      .money-adder-input--denom-wrapper{
+        margin: 0.9rem 0.15rem 0.9rem 0.25rem;
+        .input{
+          @include input;
+        }
+      }
+      .money-adder-input--quantity-wrapper{
+        margin: 0.9rem 0.25rem;
+        .input{
+          @include input;
+        }
+      }
+      .money-adder-button--add-to-drawer-wrapper{
+        margin: 0.6rem 0.25rem;
+        line-height: 1.2;
+        .trigger-button{
+          @include trigger-button;
+        }
+      }
+    }
+  }
+  .money-drawer-container{
+    margin: 0 auto;
+    position: relative;
+    @include no-select;
+    .scrollable-vertical-icon{
+      &.visible {
+        background-image: url('./../assets/vertical-scroll.png');
+        background-size: contain;
+      }
+      width: 16px;
+      height: 16px;
+      position: absolute;
+      z-index: 3;
+      margin-left: 93%;
+      margin-top: 55px;
+    }
+    .money-drawer-table{
+      table{
+        border-spacing: 0;
+        color: #F88D61;
+        thead{
+          tr{
+            th{
+              border: solid 1px #F88D61;
+              text-align: center;
+            }
+          }
+        }
+        tbody{
+          tr{
+            &:hover{
+              background: rgba($color: #F88D61, $alpha: 0.1);
+            }
+            td{
+              border: solid 1px #F88D61;
+              text-align: center;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .money-exchange-result-container{
+    margin: 20px auto;
+    .intro {
+      .intro-text {
+        color : #FFFFFF;
+      }
+      .input{
+        @include input;
+      }
+    }
+    .trigger-button{
+      @include trigger-button;
+      width: 200px;
+      margin-top: 10px;
+    }
+    .result-wrapper{
+      .label{
+        color : #FFFFFF;
+      }
+      .result{
+        background-color: #FFFFFF;
+        width: 100%;
+        @media only screen and (min-width: 768px) {
+          width: 430px;
+        }
+        height: 100px;
+        border-radius: 8px;
+        max-height: 100px;
+        overflow: auto;
+      }
+    }
+  }
+}
