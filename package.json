@@ -3,7 +3,14 @@
   "version": "0.1.0",
   "private": true,
   "devDependencies": {
-    "react-scripts": "^2.1.8"
+    "babel-core": "^7.0.0-bridge.0",
+    "chai": "^4.2.0",
+    "enzyme": "^3.9.0",
+    "enzyme-adapter-react-16": "^1.11.2",
+    "enzyme-to-json": "^3.3.5",
+    "mocha": "^6.0.2",
+    "react-scripts": "^2.1.8",
+    "redux-mock-store": "^1.5.3"
   },
   "dependencies": {
     "lodash": "^4.17.11",
@@ -28,11 +35,11 @@
     "build-css": "node-sass-chokidar src/ -o src/",
     "watch-css": "npm run build-css && node-sass-chokidar src/ -o src/ --watch --recursive",
     "start-js": "node scripts/cfg start",
-    "old-start": "npm-run-all watch-css start-js",
-    "multi-start": "SET NODE_PATH=./src && start npm run watch-css && npm run start-js",
+    "start": "SET NODE_PATH=./src && start npm run watch-css && npm run start-js",
     "build-js": "SET NODE_PATH=./src node scripts/cfg build",
     "build": "npm-run-all build-css build-js",
-    "test": "react-scripts test --env=jsdom",
+    "old-test": "SET NODE_PATH=./src && react-scripts test --env=jsdom",
+    "test": "SET NODE_PATH=./src && react-scripts test",
     "eject": "react-scripts eject"
   },
   "browserslist": [
