@@ -1,4 +1,4 @@
-import constants from 'constants/index'
+import constants from './../constants'
 
 
 const clickHandler = function clickHandler() {

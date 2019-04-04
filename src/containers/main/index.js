@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import actions from 'actions/moneyChange'
+import actions from './../../actions/moneyChange';
 import MoneyAdder from './moneyAdder';
 import MoneyDrawer from './moneyDrawer';
 import MoneyExchangeAndCombinationResult from './moneyExchangeAndCombinationResult';

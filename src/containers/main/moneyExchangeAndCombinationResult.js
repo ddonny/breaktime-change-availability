@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import _ from 'lodash';
-import actions from 'actions/moneyChange';
+import actions from './../../actions/moneyChange';
 
 class MoneyExchangeAndCombinationResult extends React.Component {
     constructor(props) {
@@ -112,12 +112,13 @@ class MoneyExchangeAndCombinationResult extends React.Component {
         })
     };
     renderFinalCombination = (a, b, isLast) => {
-        console.log('combinations', a);
-        console.log('combinations', b);
+        // console.log('combinations', a);
+        // console.log('combinations', b);
         let countby = _.countBy(a);
         let newAppend = '';
         Object.keys(countby).map(function(key, index) {
             newAppend += ' ' + key + '(' + countby[key] + 'x) ';
+            return newAppend;
         });
         if (!isLast) {
             return newAppend += ' or ';

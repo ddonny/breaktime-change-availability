@@ -71,13 +71,17 @@ function loadCustomizer(module) {
 function rewireModule(modulePath, customizer) {
   // Load the module with `rewire`, which allows modifying the
   // script's internal variables.
-  let defaults = rewire(modulePath);
 
   // Reach into the module, grab its global 'config' variable,
   // and pass it through the customizer function.
   // The customizer should *mutate* the config object, because
   // react-scripts imports the config as a `const` and we can't
   // modify that reference.
-  let config = defaults.__get__('config');
-  customizer(config);
+  let defaults = rewire(modulePath);
+  if (defaults.hasOwnProperty('config')) {
+    let config = defaults.__get__('config');
+    config = customizer(Object.assign({}, config));
+    defaults.__set__('config', config);
+  }
+
 }
