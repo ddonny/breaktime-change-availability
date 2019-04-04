@@ -53,6 +53,7 @@ class MoneyAdder extends React.Component {
             let newArray = [];
             newArray.push(obj);
             setToDrawer(newArray)
+            this.setState({denom: ''})
         }
     }
     render() {

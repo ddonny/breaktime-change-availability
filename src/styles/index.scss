@@ -194,10 +194,14 @@ button{
     margin: 20px auto;
     .intro {
       .intro-text {
-        color : #FFFFFF;
+        color : #FFF;
       }
       .input{
         @include input;
+      }
+      .error-message{
+        color: #800080;
+        font-size: 14px;
       }
     }
     .trigger-button{

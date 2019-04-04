@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import actions from './../../actions/moneyChange';
 import _ from 'lodash';
+import {validation} from './../../utility';
 
 class MoneyExchangeAndCombinationResult extends React.Component {
     constructor(props) {
@@ -9,7 +10,8 @@ class MoneyExchangeAndCombinationResult extends React.Component {
         this.state = {
             amountOfRupiahs: '',
             combinations: [],
-            clicked: false
+            clicked: false,
+            amountOfRupiahsError: null
         }
     }
     changeState = (type, value) => {
@@ -18,24 +20,13 @@ class MoneyExchangeAndCombinationResult extends React.Component {
         });
     }
 
-    onlyNumber = (e) => {
-        const re = /[0-9]+/g;
-        if (!re.test(e.key)) {
-            e.preventDefault();
+    onKeyPress = (e) => {
+        if (e.key === 'Enter') {
+            this.triggerCalculateCombination()
         }
+        
     };
-    async afterInputChanged(type, value) {
-        const a = {
-            result1: await this.wait(200,
-                this.changeState(type, value)
-            ),
-            result2: await this.wait(200,
-                this.triggerCalculateCombination()
-            )
-        };
-        return a
-    }
-
+    
     wait(ms, data) {
         return new Promise(resolve => setTimeout(resolve.bind(this, data), ms));
     }
@@ -49,13 +40,10 @@ class MoneyExchangeAndCombinationResult extends React.Component {
                 newValue = Number(newValue);
             }
         }
-        this.afterInputChanged(type, newValue);
+        this.changeState(type, value)
     }
     sumTotal = (acc, currentValue) => acc + currentValue;
     findCombinations = (amountLeftWillChangedNumber = 0, availableDenomsDesc, currentCombinations = [0]) => {
-        // console.log('availableDenomsDesc', availableDenomsDesc)
-        // console.log('amountLeftWillChangedNumber', amountLeftWillChangedNumber)
-        // console.log('currentCombinations', currentCombinations)
         while (amountLeftWillChangedNumber > 0 && availableDenomsDesc.length > 0) {
             if (availableDenomsDesc[0] <= amountLeftWillChangedNumber) {
                 amountLeftWillChangedNumber -= availableDenomsDesc[0];
@@ -73,29 +61,38 @@ class MoneyExchangeAndCombinationResult extends React.Component {
             amountLeft: amountLeftWillChangedNumber
         };
     }
-    triggerCalculateCombination = () => {
+    triggerCalculateCombination = (e) => {
         const {
             amountOfRupiahs
         } = this.state;
         const {
             stateDrawer
         } = this.props;
-        this.setState({
-            combinations: []
-        }, () => {
-            let availableDenoms = [];
-            // transform to array of denom
-            for (let a = 0; a < stateDrawer.length; a++) {
-                availableDenoms = [...availableDenoms, stateDrawer[a].denom]
-            }
-            // sort by desc
-            let availableDenomsDesc = availableDenoms.sort(function(a, b){return b - a});
-            let calcCombinations = this.findCombinations(amountOfRupiahs, availableDenomsDesc);
-            this.setState({
-                combinations: calcCombinations,
-                clicked: true
-            });
-        })
+            // validate
+            let validationRes = validation(amountOfRupiahs);
+            if (validationRes.invalidFlag) {
+                this.setState({
+                    amountOfRupiahsError: validationRes
+                })
+            } else {
+                this.setState({
+                    combinations: [],
+                    amountOfRupiahsError: null
+                }, () => {
+                    let availableDenoms = [];
+                    // transform to array of denom
+                    for (let a = 0; a < stateDrawer.length; a++) {
+                        availableDenoms = [...availableDenoms, stateDrawer[a].denom]
+                    }
+                    // sort by desc
+                    let availableDenomsDesc = availableDenoms.sort(function(a, b){return b - a});
+                    let calcCombinations = this.findCombinations(amountOfRupiahs, availableDenomsDesc);
+                    this.setState({
+                        combinations: calcCombinations,
+                        clicked: true
+                    });
+                })
+        }
     };
 
     renderFinalCombination = (combinations) => {
@@ -118,13 +115,23 @@ class MoneyExchangeAndCombinationResult extends React.Component {
         const {
             amountOfRupiahs,
             combinations,
-            clicked
+            clicked,
+            amountOfRupiahsError
         } = this.state;
+        console.log('amountOfRupiahsError', amountOfRupiahsError)
         return (
             <div className="money-exchange-result-container">
                 <div className="intro">
                     <div className="intro-text">Number of Rupiahs: </div>
-                    <input type="text" className="input" onKeyPress={(e) => this.onlyNumber(e)} defaultValue={amountOfRupiahs} onChange={(e) => { this.handleChange('amountOfRupiahs', e) }} placeholder="Amount of Rupiahs" />
+                    <input type="text" className="input" onKeyPress={(e) => this.onKeyPress(e)} defaultValue={amountOfRupiahs} onChange={(e) => { this.handleChange('amountOfRupiahs', e) }} placeholder="Amount of Rupiahs" />
+                    {
+                        (amountOfRupiahsError && amountOfRupiahsError.invalidFlag) ?
+                            <div className="error-message">
+                                {amountOfRupiahsError.invalidMessage}
+                            </div>
+                        :
+                            null
+                    }
                 </div>
                 <button onClick={this.triggerCalculateCombination} className="trigger-button" disabled={(amountOfRupiahs === '') ? true : false}>
                     Find Short Combination
