@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux'
-import actions from './../../actions/moneyChange';
+import actions from './../../../actions/moneyChange';
 
 class MoneyAdder extends React.Component {
     constructor(props) {

@@ -1,9 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import actions from './../../actions/moneyChange';
-import MoneyAdder from './moneyAdder';
-import MoneyDrawer from './moneyDrawer';
-import MoneyExchangeAndCombinationResult from './moneyExchangeAndCombinationResult';
+import MoneyAdder from './money_adder';
+import MoneyDrawer from './money_drawer';
+import MoneyExchangeAndCombinationResult from './money_exchange_combination';
 
 class MainComponent extends React.Component {
   constructor (props) {

@@ -1,8 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import actions from './../../actions/moneyChange';
+import actions from './../../../actions/moneyChange';
 import _ from 'lodash';
-import {validation} from './../../utility';
+import {validation} from './../../../utility';
 
 class MoneyExchangeAndCombinationResult extends React.Component {
     constructor(props) {
@@ -78,8 +78,8 @@ class MoneyExchangeAndCombinationResult extends React.Component {
                 // replace . character
                 let newStringVal = amountOfRupiahs.replace(/[^0-9,]/g, '')
                 newStringVal = newStringVal.replace(',', '.')
-                console.log('newStringVal', newStringVal)
-                console.log('number val', Number(newStringVal))
+                // console.log('newStringVal', newStringVal)
+                // console.log('number val', Number(newStringVal))
                 // convert amountOfRupiahs to Number
                 this.setState({
                     combinations: [],
@@ -125,7 +125,7 @@ class MoneyExchangeAndCombinationResult extends React.Component {
             clicked,
             amountOfRupiahsError
         } = this.state;
-        console.log('amountOfRupiahsError', amountOfRupiahsError)
+        // console.log('amountOfRupiahsError', amountOfRupiahsError)
         return (
             <div className="money-exchange-result-container">
                 <div className="intro">
