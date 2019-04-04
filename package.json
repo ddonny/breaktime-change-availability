@@ -9,6 +9,7 @@
     "enzyme-adapter-react-16": "^1.11.2",
     "enzyme-to-json": "^3.3.5",
     "mocha": "^6.0.2",
+    "react-dom": "^16.8.6",
     "react-scripts": "^2.1.8",
     "redux-mock-store": "^1.5.3"
   },
@@ -19,7 +20,6 @@
     "proxyquire": "^2.0.1",
     "rc-table": "^6.3.1",
     "react": "^16.3.2",
-    "react-dom": "^16.3.2",
     "react-redux": "^5.0.6",
     "react-router": "^4.2.0",
     "react-router-dom": "^4.2.2",
@@ -38,8 +38,7 @@
     "start": "SET NODE_PATH=./src && start npm run watch-css && npm run start-js",
     "build-js": "SET NODE_PATH=./src node scripts/cfg build",
     "build": "npm-run-all build-css build-js",
-    "old-test": "SET NODE_PATH=./src && react-scripts test --env=jsdom",
-    "test": "SET NODE_PATH=./src && react-scripts test",
+    "test": "SET NODE_PATH=./src && react-scripts test --collectCoverage",
     "eject": "react-scripts eject"
   },
   "browserslist": [
