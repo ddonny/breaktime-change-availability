@@ -75,9 +75,16 @@ class MoneyExchangeAndCombinationResult extends React.Component {
                     amountOfRupiahsError: validationRes
                 })
             } else {
+                // replace . character
+                let newStringVal = amountOfRupiahs.replace(/[^0-9,]/g, '')
+                newStringVal = newStringVal.replace(',', '.')
+                console.log('newStringVal', newStringVal)
+                console.log('number val', Number(newStringVal))
+                // convert amountOfRupiahs to Number
                 this.setState({
                     combinations: [],
-                    amountOfRupiahsError: null
+                    amountOfRupiahsError: null,
+                    amountOfRupiahs: newStringVal
                 }, () => {
                     let availableDenoms = [];
                     // transform to array of denom
@@ -86,7 +93,7 @@ class MoneyExchangeAndCombinationResult extends React.Component {
                     }
                     // sort by desc
                     let availableDenomsDesc = availableDenoms.sort(function(a, b){return b - a});
-                    let calcCombinations = this.findCombinations(amountOfRupiahs, availableDenomsDesc);
+                    let calcCombinations = this.findCombinations(newStringVal, availableDenomsDesc);
                     this.setState({
                         combinations: calcCombinations,
                         clicked: true
