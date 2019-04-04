@@ -4,28 +4,36 @@ const initState = {
   value: 0,
   stateDrawer: [
     {
-      denom: 10000,
-      quantity: 3
+      denom: 100000
     },
     {
-      denom: 5000,
-      quantity: 6
+      denom: 50000
     },
     {
-      denom: 1000,
-      quantity: 8
+      denom: 20000
+    },
+    {
+      denom: 10000
+    },
+    {
+      denom: 5000
+    },
+    {
+      denom: 1000
+    },
+    {
+      denom: 500
+    },
+    {
+      denom: 100
+    },
+    {
+      denom: 50
     }
   ]
 }
 
 const ACTION_HANDLERS = {
-  [constants.TEST__CLICK]: (state) => {
-    const { value } = state
-    return {
-      ...state,
-      value: value + 1
-    }
-  },
   [constants.SET_TO_DRAWER]: (state, data) => {
     const { stateDrawer } = state
     let newData = [];

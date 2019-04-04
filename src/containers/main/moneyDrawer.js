@@ -33,19 +33,12 @@ class MoneyDrawer extends React.Component {
         stateDrawer
     } = this.props;
     const columns = [
-        { title: 'Money', dataIndex: 'm', key: 'm', width: 100},
-        { title: 'Quantity', dataIndex: 'q', key: 'q', width: 100}
+        { title: 'Money', dataIndex: 'm', key: 'm', width: 100}
     ];
-    // const data = [
-    //     { m: '1000', q: '2'},
-    //     { m: '2000', q: '5'},
-    //     { m: '5000', q: '2'},
-    //     { m: '10000', q: '2'}
-    // ];
     let dataTable = [];
     for (let a = 0; a < stateDrawer.length; a++) {
         let rec = { m: stateDrawer[a].denom, q: stateDrawer[a].quantity};
-        dataTable.push(rec);
+        dataTable = [...dataTable, rec]
     }
     return (
         <div className="money-drawer-container" onScroll={this.listenScrollEvent.bind(this)}  title="scroll to view more data">
@@ -56,13 +49,13 @@ class MoneyDrawer extends React.Component {
                 <div className="scrollable-vertical-icon"/>
             }
             <Table
-            columns={columns}
-            data={dataTable}
-            useFixedHeader={true}
-            className="money-drawer-table"
-            style={{ width: 320 }}
-            scroll={{ x: 0, y: 105 }}
-            rowKey={record => record.m}
+                columns={columns}
+                data={dataTable}
+                useFixedHeader={true}
+                className="money-drawer-table"
+                style={{ width: 320 }}
+                scroll={{ x: 0, y: 105 }}
+                rowKey={record => record.m}
             />
         </div>
     )

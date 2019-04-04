@@ -6,8 +6,7 @@ class MoneyAdder extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            denom: '',
-            quantity: ''
+            denom: ''
         }
     }
     changeState = (type, value) => {
@@ -18,7 +17,7 @@ class MoneyAdder extends React.Component {
     handleChange = (type, event) => {
         let value = event.target.value;
         let newValue = '';
-        if (type === 'denom' || type === 'quantity') {
+        if (type === 'denom') {
             newValue = value.replace(/[^0-9]/g, '');
             if (newValue !== '') {
                 newValue = Number(newValue);
@@ -34,16 +33,14 @@ class MoneyAdder extends React.Component {
     };
     triggerAddToDrawer = () => {
         const {
-            denom,
-            quantity
+            denom
         } = this.state;
         const {
             setToDrawer,
             stateDrawer
         } = this.props;
         let obj = {
-            denom: denom,
-            quantity: quantity
+            denom: denom
         };
         let shouldAdd = true;
         for (let a = 0; a < stateDrawer.length; a++){
@@ -60,19 +57,15 @@ class MoneyAdder extends React.Component {
     }
     render() {
         const {
-            denom,
-            quantity
+            denom
         } = this.state;
         return (
             <div className="money-adder-container">
                 <div className="money-adder-input--denom-wrapper">
                     <input type="text" value={denom} onKeyPress={(e) => this.onlyNumber(e)} onChange={(e) => { this.handleChange('denom', e) }} className="input" placeholder="Denom" />
                 </div>
-                <div className="money-adder-input--quantity-wrapper">
-                    <input type="text" value={quantity} onKeyPress={(e) => this.onlyNumber(e)} onChange={(e) => { this.handleChange('quantity', e) }} className="input" placeholder="Quantity" />
-                </div>
                 <div className="money-adder-button--add-to-drawer-wrapper">
-                    <button onClick={this.triggerAddToDrawer} className="trigger-button" disabled={(denom === '' || quantity === '') ? true : false}>
+                    <button onClick={this.triggerAddToDrawer} className="trigger-button" disabled={(denom === '') ? true : false}>
                         Add Money to Drawer
                     </button>
                 </div>

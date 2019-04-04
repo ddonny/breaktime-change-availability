@@ -14,7 +14,7 @@
   background-color: rgba($color: #FFFFFF, $alpha: 1.0);
   border-radius: 5px;
   border: none;
-  width: 100px;
+  width: 200px;
   height: 36px;
 }
 @mixin optional-at-root($sel) {
@@ -141,6 +141,16 @@ button{
     margin: 0 auto;
     position: relative;
     @include no-select;
+    .rc-table-fixed-header{
+      .rc-table-scroll{
+        .rc-table-header{
+          overflow-x: auto;
+          margin-bottom: -20px;
+          overflow-y: auto;
+          margin-bottom: 2px !important;
+        }
+      }
+    }
     .scrollable-vertical-icon{
       &.visible {
         background-image: url('./../assets/vertical-scroll.png');
